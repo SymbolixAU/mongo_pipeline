@@ -8,6 +8,10 @@
 #' @export
 match_pipeline <- function(fields){
 
+	# TODO - $in array, regex, ...
+	## - if more than one row, assume an 'in'?
+	## maybe use a list, and specify ins and ors and regex etc.
+
 	if(inherits(fields, "data.frame")){
 		if(nrow(fields) != 1)
 			stop("the fields data.frame can only be one row long")
@@ -45,6 +49,26 @@ project_pipeline <- function(fields, exclude_id = TRUE){
 		stop(json_error("project"))
 
 	return(project)
+}
+
+#' undwind pipeline
+#'
+#' builds the \code{$unwind} pipeline
+#' @param field string indicating the array field to unwind.
+#' @return unwind pipeline string
+#' @export
+unwind_pipeline <- function(field){
+
+	if(length(field) != 1)
+		stop("field must be a single string indicating the field to unwind")
+
+	unwind <- paste0(' { "$unwind" : "$', field, '" }')
+
+	if(!jsonlite::validate(unwind))
+		stop(json_error("unwind"))
+
+	return(unwind)
+
 }
 
 json_error <- function(pipeline){

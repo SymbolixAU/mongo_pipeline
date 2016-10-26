@@ -2,3 +2,4 @@
 
 export(match_pipeline)
 export(project_pipeline)
+export(unwind_pipeline)
