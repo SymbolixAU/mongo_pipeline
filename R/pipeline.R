@@ -72,5 +72,9 @@ unwind_pipeline <- function(field){
 }
 
 json_error <- function(pipeline){
-	return(paste0("There is an error in the JSON for the ", pipeline, " pipeline"))
+	return(
+		paste0("There is an error in the JSON for the ", pipeline, " pipeline")
+		)
 }
+
+
