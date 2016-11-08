@@ -54,22 +54,31 @@ project_pipeline <- function(fields, exclude_id = TRUE){
 #' undwind pipeline
 #'
 #' builds the \code{$unwind} pipeline
-#' @param field string indicating the array field to unwind.
+#' @param fields string vector indicating the array fields to unwind.
 #' @return unwind pipeline string
 #' @export
-unwind_pipeline <- function(field){
+unwind_pipeline <- function(fields){
 
-	if(length(field) != 1)
-		stop("field must be a single string indicating the field to unwind")
+	unwind <- paste0('{ "$unwind" : "$', fields, '" }')
 
-	unwind <- paste0(' { "$unwind" : "$', field, '" }')
-
-	if(!jsonlite::validate(unwind))
+	## unwind is done one at a time
+	if(any(sapply(unwind, jsonlite::validate)) == 0)
 		stop(json_error("unwind"))
+
+	unwind <- paste0(unwind, collapse = ", ")
+
+	# if(!jsonlite::validate(unwind))
+	# 	stop(json_error("unwind"))
 
 	return(unwind)
 
 }
+
+#' Group pipeline
+#'
+#' builes the \code{$group} pipeline
+#' @param
+
 
 json_error <- function(pipeline){
 	return(

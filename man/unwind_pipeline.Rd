@@ -4,10 +4,10 @@
 \alias{unwind_pipeline}
 \title{undwind pipeline}
 \usage{
-unwind_pipeline(field)
+unwind_pipeline(fields)
 }
 \arguments{
-\item{field}{string indicating the array field to unwind.}
+\item{fields}{string vector indicating the array fields to unwind.}
 }
 \value{
 unwind pipeline string
